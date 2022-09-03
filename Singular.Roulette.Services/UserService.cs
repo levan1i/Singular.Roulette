@@ -1,7 +1,8 @@
-﻿using Singular.Roulette.Domain.Interfaces;
+﻿using Singular.Roulette.Common.Exceptions;
+using Singular.Roulette.Domain.Interfaces;
 using Singular.Roulette.Services.Abstractions;
 using Singular.Roulette.Services.Abstractions.Dtos;
-using Singular.Roulette.Services.Abstractions.Exceptions;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;

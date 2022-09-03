@@ -18,6 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Singular.Roulette.Common", "Singular.Roulette.Common\Singular.Roulette.Common.csproj", "{27F63633-19EC-47C8-B9AB-70D679C50F5A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{84860A3E-FA13-4D07-8570-9F84EC20DC93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84860A3E-FA13-4D07-8570-9F84EC20DC93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84860A3E-FA13-4D07-8570-9F84EC20DC93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27F63633-19EC-47C8-B9AB-70D679C50F5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27F63633-19EC-47C8-B9AB-70D679C50F5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27F63633-19EC-47C8-B9AB-70D679C50F5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27F63633-19EC-47C8-B9AB-70D679C50F5A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

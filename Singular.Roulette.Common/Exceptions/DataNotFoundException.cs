@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Singular.Roulette.Services.Abstractions.Exceptions
+namespace Singular.Roulette.Common.Exceptions
 {
     public class DataNotFoundException : Exception
     {
@@ -12,6 +12,7 @@ namespace Singular.Roulette.Services.Abstractions.Exceptions
         {
             Message = message;
         }
-        string Message { get; }
+       public string Message { get; }
+        public string Code { get; set; }
     }
 }

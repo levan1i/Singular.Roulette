@@ -7,6 +7,7 @@ using System.Text;
 using Singular.Roulette.Api.Identity;
 using Microsoft.OpenApi.Models;
 using Singular.Roulette.Api.Extentions;
+using Singular.Roulette.Common.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,5 +44,5 @@ app.UseHttpsRedirection();
 
 app.MapControllers();
 app.UseIdentityServer();
-
+app.UseMiddleware<ErrorHandlerMiddleware>();
 app.Run();

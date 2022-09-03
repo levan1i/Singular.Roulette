@@ -1,4 +1,4 @@
-﻿namespace Singular.Roulette.Services
+﻿namespace Singular.Roulette.Common
 {
     public class Class1
     {

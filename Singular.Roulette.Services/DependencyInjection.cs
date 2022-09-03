@@ -13,6 +13,7 @@ namespace Singular.Roulette.Services.Abstractions
         {
 
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IBetService, BetService>();
 
 
             return services;
