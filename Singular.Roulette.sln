@@ -5,9 +5,18 @@ VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Singular.Roulette.Api", "Singular.Roulette.Api\Singular.Roulette.Api.csproj", "{0F208795-1DF9-4D01-87DB-510B371E29CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Singular.Roulette.Domain", "Singular.Roulette.Domain\Singular.Roulette.Domain.csproj", "{146913E1-FABC-405D-8D36-C91248992BCE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Singular.Roulette.Domain", "Singular.Roulette.Domain\Singular.Roulette.Domain.csproj", "{146913E1-FABC-405D-8D36-C91248992BCE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Singular.Roulette.Repository", "Singular.Roulette.Repository\Singular.Roulette.Repository.csproj", "{E9D878E0-0D9B-46FE-9E58-D942AC4BAFE0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Singular.Roulette.Repository", "Singular.Roulette.Repository\Singular.Roulette.Repository.csproj", "{E9D878E0-0D9B-46FE-9E58-D942AC4BAFE0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Singular.Roulette.Services", "Singular.Roulette.Services\Singular.Roulette.Services.csproj", "{3FA5619D-E1B1-492B-ABC7-19672B6056DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Singular.Roulette.Services.Abstractions", "Singular.Roulette.Services.Abstractions\Singular.Roulette.Services.Abstractions.csproj", "{84860A3E-FA13-4D07-8570-9F84EC20DC93}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4978FDAC-D5F4-444D-A81E-7B543CC3379F}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +36,14 @@ Global
 		{E9D878E0-0D9B-46FE-9E58-D942AC4BAFE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9D878E0-0D9B-46FE-9E58-D942AC4BAFE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9D878E0-0D9B-46FE-9E58-D942AC4BAFE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FA5619D-E1B1-492B-ABC7-19672B6056DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FA5619D-E1B1-492B-ABC7-19672B6056DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FA5619D-E1B1-492B-ABC7-19672B6056DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FA5619D-E1B1-492B-ABC7-19672B6056DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84860A3E-FA13-4D07-8570-9F84EC20DC93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84860A3E-FA13-4D07-8570-9F84EC20DC93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84860A3E-FA13-4D07-8570-9F84EC20DC93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84860A3E-FA13-4D07-8570-9F84EC20DC93}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
