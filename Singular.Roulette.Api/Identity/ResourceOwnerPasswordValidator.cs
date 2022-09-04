@@ -10,6 +10,7 @@ namespace Singular.Roulette.Api.Identity
 
         private readonly IUserService _userService;
 
+
         public ResourceOwnerPasswordValidator(IUserService userService)
         {
             _userService = userService;

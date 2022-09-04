@@ -11,9 +11,11 @@ namespace Singular.Roulette.Domain.Models
         public long FromAccountId { get; set; } 
         public long ToAccountId { get; set; }
         public DateTime TransactionDate { get; set; }
-        public long ParentTransactionId { get; set; }
-
+        public long? ParentTransactionId { get; set; }
+        public int TransactionStatusCode { get; set; }
+        public decimal Amount { get; set; }
         public TransactionType TransactionType { get; set; }
+        public TransactionStatus TransactionStatus { get; set; }
 
     }
 }

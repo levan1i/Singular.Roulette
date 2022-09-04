@@ -19,9 +19,12 @@ namespace Singular.Roulette.Api.Identity
         {
 
             var user =await _userService.Get(Convert.ToInt64(context.Subject.Claims.First(x=>x.Type=="sub").Value));
+            var sessionId = Guid.NewGuid().ToString();
+            await _userService.AddUserHeartBeet(sessionId, user.UserId);
             var claims = new List<Claim>
             {
               new Claim("username",user.UserName ),
+               new Claim("sessionId",sessionId ),
             };
             context.IssuedClaims = claims;
 

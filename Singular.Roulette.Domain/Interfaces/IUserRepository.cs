@@ -10,5 +10,11 @@ namespace Singular.Roulette.Domain.Interfaces
     public interface IUserRepository : IGenericRepository<User>
     {
         Task<User> FindByUserName(string username);
+        Task<User> CreateUserAccounts(User user);
+        Task<Account> GetUserAccount(long UserId, string Currency);
+        Task<decimal?> GetUserBallance(long UserId, string currency);
+       
     }
+
+
 }

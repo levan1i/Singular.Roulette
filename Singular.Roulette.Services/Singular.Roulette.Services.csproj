@@ -15,4 +15,10 @@
 	  </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="ge.singular.roulette.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

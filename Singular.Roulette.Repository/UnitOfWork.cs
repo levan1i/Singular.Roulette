@@ -9,12 +9,13 @@ namespace Singular.Roulette.Repository
 {
     internal class UnitOfWork : IUnitOfWork
     {
-        public UnitOfWork(IBetRepository bets, ISpinRepository spins, ITransactionRepository transactions, IUserRepository users, SingularDbContext context)
+        public UnitOfWork(IBetRepository bets, ISpinRepository spins, ITransactionRepository transactions, IUserRepository users,IHeartBeetRepository heartBeet, SingularDbContext context)
         {
             Bets = bets;
             Spins = spins;
             Transactions = transactions;
             Users = users;
+            HeartBeet = heartBeet;
             _context = context;
         }
         private readonly SingularDbContext _context;
@@ -23,10 +24,13 @@ namespace Singular.Roulette.Repository
         public ITransactionRepository Transactions { get; }
         public IUserRepository Users { get; }
 
+        public IHeartBeetRepository HeartBeet { get; }
+
         public int Complete()
         {
             return _context.SaveChanges();
         }
+
         public void Dispose()
         {
             Dispose(true);

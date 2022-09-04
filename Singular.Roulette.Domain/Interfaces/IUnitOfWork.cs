@@ -12,6 +12,7 @@ namespace Singular.Roulette.Domain.Interfaces
         IBetRepository Bets { get; }
         ISpinRepository Spins { get; } 
         ITransactionRepository Transactions { get;  }
+        IHeartBeetRepository HeartBeet { get; }
         IUserRepository Users { get; }
         int Complete();
     }

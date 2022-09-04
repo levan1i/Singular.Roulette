@@ -1,4 +1,6 @@
-﻿using Singular.Roulette.Common.Exceptions;
+﻿using Microsoft.AspNetCore.Http;
+using Singular.Roulette.Common.Exceptions;
+using Singular.Roulette.Common.Extentions;
 using Singular.Roulette.Domain.Interfaces;
 using Singular.Roulette.Services.Abstractions;
 using Singular.Roulette.Services.Abstractions.Dtos;
@@ -15,10 +17,12 @@ namespace Singular.Roulette.Services
     public class UserService : IUserService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IHttpContextAccessor httpContextAccessor;
 
-        public UserService(IUnitOfWork unitOfWork)
+        public UserService(IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor)
         {
             _unitOfWork = unitOfWork;
+            this.httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<UserDto> Create(UserDto user)
@@ -31,7 +35,14 @@ namespace Singular.Roulette.Services
             });
              _unitOfWork.Complete();
 
+
+           await _unitOfWork.Users.CreateUserAccounts(res);
+            _unitOfWork.Complete();
             user.UserId = res.UserId;
+            user.Password = null;
+
+
+        
           
             return user;
             
@@ -95,6 +106,43 @@ namespace Singular.Roulette.Services
                 UserId = user.UserId,
                 UserName = user.UserName
             };
+        }
+
+        public async Task<BallaceDto> GetBallance()
+        {
+            var ballance =await _unitOfWork.Users.GetUserBallance(httpContextAccessor.GetUserId(),"USD");
+            if(!ballance.HasValue)
+            {
+                throw new DataNotFoundException("User Account Not Found");
+            }
+
+            return new BallaceDto(ballance.Value);
+        }
+
+        public async Task AddUserHeartBeet(string sessionId, long userid)
+        {
+            await _unitOfWork.HeartBeet.Add(new Domain.Models.HeartBeet()
+            {
+                LastUpdate = DateTime.Now,
+                SessionId = sessionId,
+                UserId = userid
+            });
+            _unitOfWork.Complete();
+        }
+
+        public async Task<DateTime> GetUserHeartBeet(string sessionId)
+        {
+            var heartbeet = await _unitOfWork.HeartBeet.Get(sessionId);
+            return heartbeet.LastUpdate;
+        }
+
+        public async Task UpdateUserHeartBeet(string sessionId)
+        {
+            var heartbeet = await _unitOfWork.HeartBeet.Get(sessionId);
+            heartbeet.LastUpdate = DateTime.Now;  
+            _unitOfWork.HeartBeet.Update(heartbeet); ;
+             _unitOfWork.Complete();
+
         }
     }
 }

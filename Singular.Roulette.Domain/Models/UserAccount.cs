@@ -6,8 +6,10 @@ namespace Singular.Roulette.Domain.Models
 {
     public class UserAccount
     {
-        public long AccountId { get; set; } 
-        public long UserId { get; set; }
+        public long AccountId1 { get; set; } 
+        public long UserId1 { get; set; }
+        public virtual User User { get; set; } 
+        public virtual Account Account { get; set; }
 
     }
 }

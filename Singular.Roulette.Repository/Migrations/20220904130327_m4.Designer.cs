@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Singular.Roulette.Repository;
 
@@ -10,9 +11,10 @@ using Singular.Roulette.Repository;
 namespace Singular.Roulette.Repository.Migrations
 {
     [DbContext(typeof(SingularDbContext))]
-    partial class SingularDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220904130327_m4")]
+    partial class m4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -91,30 +93,11 @@ namespace Singular.Roulette.Repository.Migrations
                     b.Property<decimal>("WonAmount")
                         .HasColumnType("decimal(65,30)");
 
-                    b.Property<bool>("isFinnished")
-                        .HasColumnType("tinyint(1)");
-
                     b.HasKey("BetId");
 
                     b.HasIndex("SpinId");
 
                     b.ToTable("Bets");
-                });
-
-            modelBuilder.Entity("Singular.Roulette.Domain.Models.HeartBeet", b =>
-                {
-                    b.Property<string>("SessionId")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<DateTime>("LastUpdate")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("SessionId");
-
-                    b.ToTable("HeartBeets");
                 });
 
             modelBuilder.Entity("Singular.Roulette.Domain.Models.Spin", b =>

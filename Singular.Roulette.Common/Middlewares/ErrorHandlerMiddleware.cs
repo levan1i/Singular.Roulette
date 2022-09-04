@@ -59,6 +59,7 @@ namespace Singular.Roulette.Common.Middlewares
                         // unhandled error
                         response.StatusCode = (int)HttpStatusCode.InternalServerError;
                         resultdata.ErrorMessage = error.Message;
+                        resultdata.ErrorCode = "internal_server_error";
                         break;
                 }
 

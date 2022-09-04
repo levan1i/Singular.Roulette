@@ -21,7 +21,11 @@ namespace Singular.Roulette.Repository
             return await _context.Set<T>().FindAsync(id);
         }
 
-     
+        public async Task<T> Get(string id)
+        {
+            return await _context.Set<T>().FindAsync(id);
+        }
+
 
         public async Task<T> Add(T entity)
         {

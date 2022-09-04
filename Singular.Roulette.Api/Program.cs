@@ -22,6 +22,7 @@ builder.Services.AddSwagger(builder.Configuration);
 builder.Services.AddRepository(builder.Configuration.GetConnectionString("Default"));
 builder.Services.AddServices();
 builder.Services.AddIdentity(builder.Configuration);
+builder.Services.AddHttpContextAccessor();
 
 
 var app = builder.Build();
@@ -38,11 +39,12 @@ if (app.Environment.IsDevelopment())
         }
         );
 }
+app.UseMiddleware<TokenSessionMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseHttpsRedirection();
-
 app.MapControllers();
 app.UseIdentityServer();
+app.UseMiddleware<HeartbeetMiddleware>();
 app.UseMiddleware<ErrorHandlerMiddleware>();
 app.Run();

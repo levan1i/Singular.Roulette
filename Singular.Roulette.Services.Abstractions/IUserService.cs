@@ -12,6 +12,10 @@ namespace Singular.Roulette.Services.Abstractions
         Task<UserDto> Get(long UserId);
         Task<UserDto> Get(string username);
         Task<UserDto> Create(UserDto user);
+        Task<BallaceDto> GetBallance();
+        Task AddUserHeartBeet(string sessionId, long userid);
+        Task<DateTime> GetUserHeartBeet(string sessionId);
         Task<long> ValidatePassword(string UserName, string Password);
+        Task UpdateUserHeartBeet(string sessionId);
     }
 }

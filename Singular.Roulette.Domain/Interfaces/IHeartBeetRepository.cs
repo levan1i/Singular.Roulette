@@ -7,9 +7,7 @@ using System.Threading.Tasks;
 
 namespace Singular.Roulette.Domain.Interfaces
 {
-    public interface ITransactionRepository :IGenericRepository<Transaction>
+    public interface IHeartBeetRepository :IGenericRepository<HeartBeet>
     {
-        Task<bool> MakeBetTransaction(long AccountId,decimal Amount);
-        Task<bool> MakeBetWinTransaction(long AccountId, decimal Amount);
     }
 }

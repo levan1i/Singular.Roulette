@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Singular.Roulette.Repository;
 
@@ -10,9 +11,10 @@ using Singular.Roulette.Repository;
 namespace Singular.Roulette.Repository.Migrations
 {
     [DbContext(typeof(SingularDbContext))]
-    partial class SingularDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220904172019_m6")]
+    partial class m6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
