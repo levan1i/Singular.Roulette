@@ -1,4 +1,5 @@
-﻿using Singular.Roulette.Services.Abstractions.Dtos;
+﻿using Singular.Roulette.Common.Types;
+using Singular.Roulette.Services.Abstractions.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,5 +18,7 @@ namespace Singular.Roulette.Services.Abstractions
         Task<DateTime> GetUserHeartBeet(string sessionId);
         Task<long> ValidatePassword(string UserName, string Password);
         Task UpdateUserHeartBeet(string sessionId);
+        Task<PagedResult<GameHistoryDto>> GetGameHistory(int page, int pagesize);
+
     }
 }

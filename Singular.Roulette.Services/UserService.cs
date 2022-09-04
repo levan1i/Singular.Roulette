@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Singular.Roulette.Common.Exceptions;
 using Singular.Roulette.Common.Extentions;
+using Singular.Roulette.Common.Types;
 using Singular.Roulette.Domain.Interfaces;
 using Singular.Roulette.Services.Abstractions;
 using Singular.Roulette.Services.Abstractions.Dtos;
@@ -110,13 +111,13 @@ namespace Singular.Roulette.Services
 
         public async Task<BallaceDto> GetBallance()
         {
-            var ballance =await _unitOfWork.Users.GetUserBallance(httpContextAccessor.GetUserId(),"USD");
-            if(!ballance.HasValue)
+            var accountballance =await _unitOfWork.Users.GetUserBallance(httpContextAccessor.GetUserId(),"USD");
+            if(accountballance == null)
             {
                 throw new DataNotFoundException("User Account Not Found");
             }
 
-            return new BallaceDto(ballance.Value);
+            return new BallaceDto(accountballance.Ballance);
         }
 
         public async Task AddUserHeartBeet(string sessionId, long userid)
@@ -143,6 +144,21 @@ namespace Singular.Roulette.Services
             _unitOfWork.HeartBeet.Update(heartbeet); ;
              _unitOfWork.Complete();
 
+        }
+
+        public async Task<PagedResult<GameHistoryDto>> GetGameHistory(int page,int pagesize)
+        {
+            var bet =await _unitOfWork.Bets.GetGameHistory(httpContextAccessor.GetUserId(), page, pagesize);
+            return new PagedResult<GameHistoryDto>()
+            {
+
+                CurrentPage=bet.CurrentPage,
+                PageCount=bet.PageCount,
+                PageSize=bet.PageSize,
+                Results=bet.Results.Select(x=>new GameHistoryDto() { BetAmount=x.BetAmount,WonAmount=x.WonAmount,CreateDate=x.CreateDate,SpinId=x.SpinId.Value}).ToList(),
+                RowCount=bet.RowCount
+               
+            };
         }
     }
 }

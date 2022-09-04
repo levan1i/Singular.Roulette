@@ -1,4 +1,5 @@
-﻿using Singular.Roulette.Domain.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using Singular.Roulette.Domain.Interfaces;
 using Singular.Roulette.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -14,13 +15,15 @@ namespace Singular.Roulette.Repository
         {
         }
 
-        public async Task<bool> MakeBetTransaction(long AccountId, decimal Amount)
+        public async Task<Bet> MakeBetTransaction(long AccountId, decimal Amount,Bet bet)
         {
 
             using (var dbContextTransaction = _context.Database.BeginTransaction())
             {
                 try
                 {
+
+                    var addedBet= _context.Bets.Add(bet);
                     var userAccount = _context.Accounts.Find(AccountId);
                     var userGameAccount = _context.Accounts.First(x => x.TypeId == 10 && x.Currency == userAccount.Currency && x.UserId == userAccount.UserId);
                     var userJackpotAccount = _context.Accounts.First(x => x.TypeId == 11 && x.Currency == userAccount.Currency && x.UserId == userAccount.UserId);
@@ -77,16 +80,16 @@ namespace Singular.Roulette.Repository
                     await _context.SaveChangesAsync();
                     await dbContextTransaction.CommitAsync();
 
-                    return true;
+                    return addedBet.Entity;
                 }
                 catch (Exception ex)
                 {
                     await dbContextTransaction.RollbackAsync();
-                    return false;
+                    return null;
                 }
             }
         }
-          public async Task<bool> MakeBetWinTransaction(long AccountId, decimal Amount)
+        public async Task<bool> MakeBetWinTransaction(long AccountId, decimal Amount)
         {
 
             using (var dbContextTransaction = _context.Database.BeginTransaction())
@@ -125,7 +128,40 @@ namespace Singular.Roulette.Repository
             }
         }
 
+        public async Task<bool> FinishBlockedFundsTransaction(long transactionId)
+        {
 
+            using (var dbContextTransaction = _context.Database.BeginTransaction())
+            {
+                try
+                {
+                    var transaction = _context.Transactions.Find(transactionId);
+                    var accountFrom = _context.Accounts.Find(transaction.FromAccountId);
+                    var accountTo = _context.Accounts.Find(transaction.ToAccountId);
+
+                    accountFrom.Ballance -= transaction.Amount;
+                    accountTo.Ballance += transaction.Amount;
+
+                    transaction.TransactionStatusCode = 200;
+
+                    await _context.SaveChangesAsync();
+                    await dbContextTransaction.CommitAsync();
+
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    await dbContextTransaction.RollbackAsync();
+                    return false;
+                }
+            }
+
+        }
+
+        public async Task<IEnumerable<Transaction>> GetBlockedTransactions()
+        {
+            return await _context.Transactions.Where(x => x.TransactionStatusCode == 201).ToListAsync();
+        }
     }
 }
 

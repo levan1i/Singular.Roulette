@@ -52,6 +52,7 @@ namespace Singular.Roulette.Repository
             modelBuilder.Entity<Bet>().Property(x => x.BetStringJson).HasMaxLength(2000);
             modelBuilder.Entity<Bet>().Property(x => x.UserIpAddress).HasMaxLength(200);
             modelBuilder.Entity<Bet>().HasOne(x => x.Spin).WithMany().HasForeignKey(x => x.SpinId).IsRequired(false);
+            modelBuilder.Entity<Bet>().HasIndex(x => x.CreateDate);
 
             modelBuilder.Entity<TransactionType>().HasKey(x => x.TransactionTypeId);
             modelBuilder.Entity<TransactionType>().Property(x => x.TransactionTypeId).ValueGeneratedNever();

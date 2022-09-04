@@ -20,11 +20,28 @@ namespace Singular.Roulette.Api.Controllers
             _betService = betService;
         }
 
+
+        /// <summary>
+        /// Make Bet, In case of wrong bet string or Insufficient funds, returnes 400 bad request
+        /// </summary>
+        /// <param name="bet"></param>
+        /// <returns></returns>
         [HttpPost("Make")]
        
         [ProducesResponseType(typeof(BetResult), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ResultBase), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(ResultBase), (int)HttpStatusCode.InternalServerError)]
         public Task<BetResult> Make(BetDto bet) => _betService.MakeBet(bet);
+
+
+        /// <summary>
+        /// Calculate Jackpot
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("CalcJackpot")]
+        [ProducesResponseType(typeof(BallaceDto), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ResultBase), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ResultBase), (int)HttpStatusCode.InternalServerError)]
+        public Task<BallaceDto> CalcJackpot() => _betService.CalcJackpot();
     }
 }

@@ -25,6 +25,12 @@ namespace Singular.Roulette.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
+        public async Task<BallaceDto> CalcJackpot()
+        {
+            var amount =await _unitOfWork.Accounts.CalcJackpotAmount("USD");
+            return new BallaceDto(amount);
+        }
+
         public async Task<BetResult> MakeBet(BetDto betDto)
         {
             IsBetValidResponse ibvr = CheckBets.IsValid(betDto.JsonBetString);
@@ -34,25 +40,31 @@ namespace Singular.Roulette.Services
             }
 
             var betamount = ibvr.getBetAmount();
-            var userBallance =await _unitOfWork.Users.GetUserBallance(_httpContextAccessor.GetUserId(), "USD");
-            var useraccount = await _unitOfWork.Users.GetUserAccount(_httpContextAccessor.GetUserId(),"USD");
-            if (userBallance < betamount)
+            var userAccountBallance =await _unitOfWork.Users.GetUserBallance(_httpContextAccessor.GetUserId(), "USD");
+          
+            if (userAccountBallance.Ballance < betamount)
             {
                 throw new InvalidParametersException("Insufficient funds", "insufficient_funds");
             }
-            var bet =await  _unitOfWork.Bets.Add(new Domain.Models.Bet()
+
+            var bet=  await _unitOfWork.Transactions.MakeBetTransaction(userAccountBallance.Id, betamount, new Domain.Models.Bet()
             {
                 BetAmount = ibvr.getBetAmount(),
                 UserIpAddress = _httpContextAccessor.GetUserIp(),
                 BetStringJson = betDto.JsonBetString,
                 isFinnished = false,
-                UserId = _httpContextAccessor.GetUserId()
+                UserId = _httpContextAccessor.GetUserId(),
+                CreateDate = DateTime.Now
+
             });
-            _unitOfWork.Complete();
+
+            if (bet == null)
+            {
+                throw new Exception("An Error Has Occured");
+            }
 
 
-
-            var random = 20;// RandomGenerator.Next(0, 36);
+            var random = 17; // RandomGenerator.Next(0, 36);
             int estWin = CheckBets.EstimateWin(betDto.JsonBetString, random);
             var spin =await _unitOfWork.Spins.Add(new Domain.Models.Spin()
             {
@@ -66,14 +78,11 @@ namespace Singular.Roulette.Services
             bet.SpinId = spin.SpinId;
             _unitOfWork.Bets.Update(bet);
             _unitOfWork.Complete();
-            if (estWin == 0)
+            if (estWin != 0)
             {
-              await  _unitOfWork.Transactions.MakeBetTransaction(useraccount.Id, betamount);
+                await _unitOfWork.Transactions.MakeBetWinTransaction(userAccountBallance.Id, estWin);
             }
-            else
-            {
-                await _unitOfWork.Transactions.MakeBetWinTransaction(useraccount.Id, estWin);
-            }
+           
 
 
 

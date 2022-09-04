@@ -14,6 +14,7 @@ namespace Singular.Roulette.Domain.Models
         public bool isFinnished { get; set; }
         public long UserId { get; set; }    
         public string UserIpAddress { get; set; }
+        public DateTime CreateDate { get; set; }
         public virtual Spin Spin { get; set; }
 
 

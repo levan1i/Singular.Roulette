@@ -48,13 +48,14 @@ namespace Singular.Roulette.Repository
 
         public Task<Account> GetUserAccount(long UserId, string Currency) => _context.Accounts.FirstOrDefaultAsync(x => x.UserId == UserId && x.Currency == Currency&&x.TypeId==1);
 
-        public async Task<decimal?> GetUserBallance(long UserId, string currency)
+        public async Task<Account?> GetUserBallance(long UserId, string currency)
         {
-            var account =await _context.Accounts.FirstOrDefaultAsync(x => x.TypeId == 1 &&x.Currency==currency);
+            var account =await _context.Accounts.AsNoTracking().FirstOrDefaultAsync(x => x.TypeId == 1 &&x.Currency==currency);
             if (account == null) return null;
             var plusblocks =  _context.Transactions.Where(x => x.ToAccountId == account.Id && x.TransactionStatusCode == 201).Sum(x => x.Amount);
             var minusblocks = _context.Transactions.Where(x => x.FromAccountId == account.Id && x.TransactionStatusCode == 201).Sum(x => x.Amount);
-            return account.Ballance+plusblocks-minusblocks;
+           account.Ballance= account.Ballance + plusblocks - minusblocks;
+            return account;
         }
 
        

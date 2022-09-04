@@ -18,6 +18,7 @@ namespace Singular.Roulette.Repository
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IBetRepository, BetRepository>();
             services.AddTransient<IHeartBeetRepository, HeartBeetRepository>();
+            services.AddTransient<IAccountRepository, AccountRepository>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();  
 
 

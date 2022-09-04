@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Singular.Roulette.Common.Models;
+using Singular.Roulette.Common.Types;
 using Singular.Roulette.Services.Abstractions;
 using Singular.Roulette.Services.Abstractions.Dtos;
 using System.Net;
@@ -33,8 +34,16 @@ namespace Singular.Roulette.Api.Controllers
         [ProducesResponseType(typeof(ResultBase), (int)HttpStatusCode.InternalServerError)]
         public Task<BallaceDto> Ballance() => _userService.GetBallance();
 
+
+
+        [HttpGet("GameHistory")]
+        [ProducesResponseType(typeof(PagedResult<GameHistoryDto>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ResultBase), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ResultBase), (int)HttpStatusCode.InternalServerError)]
+        public Task<PagedResult<GameHistoryDto>> GameHistory(int page=1,int pageSize=10) => _userService.GetGameHistory(page,pageSize);
+
         [HttpGet("Ballance1")]
-        [AllowAnonymous]
+        
         public int Ballance1() => 1;
     }
 }

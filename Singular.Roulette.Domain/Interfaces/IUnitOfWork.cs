@@ -14,6 +14,7 @@ namespace Singular.Roulette.Domain.Interfaces
         ITransactionRepository Transactions { get;  }
         IHeartBeetRepository HeartBeet { get; }
         IUserRepository Users { get; }
+        IAccountRepository Accounts { get;  }
         int Complete();
     }
  

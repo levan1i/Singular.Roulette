@@ -21,7 +21,7 @@ namespace Singular.Roulette.Api.Identity
                 if (context.User.Identity.IsAuthenticated)
                 {
                     IUserService _userService = context.RequestServices.GetService<IUserService>();
-                    await _userService.UpdateUserHeartBeet(context.User.Claims.First(x => x.Type == "sessionId").Value);
+                    _ = _userService.UpdateUserHeartBeet(context.User.Claims.First(x => x.Type == "sessionId").Value);
                 }
                
                 

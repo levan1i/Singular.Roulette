@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Singular.Roulette.Repository
 {
-    internal class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
-        public UnitOfWork(IBetRepository bets, ISpinRepository spins, ITransactionRepository transactions, IUserRepository users,IHeartBeetRepository heartBeet, SingularDbContext context)
+        public UnitOfWork(IBetRepository bets, ISpinRepository spins, ITransactionRepository transactions, IUserRepository users, IHeartBeetRepository heartBeet, SingularDbContext context, IAccountRepository accounts)
         {
             Bets = bets;
             Spins = spins;
@@ -17,6 +17,7 @@ namespace Singular.Roulette.Repository
             Users = users;
             HeartBeet = heartBeet;
             _context = context;
+            Accounts = accounts;
         }
         private readonly SingularDbContext _context;
         public IBetRepository Bets { get; }
@@ -25,6 +26,7 @@ namespace Singular.Roulette.Repository
         public IUserRepository Users { get; }
 
         public IHeartBeetRepository HeartBeet { get; }
+        public IAccountRepository Accounts { get; }
 
         public int Complete()
         {

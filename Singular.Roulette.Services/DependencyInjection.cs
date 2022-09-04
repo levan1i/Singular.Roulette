@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Singular.Roulette.Services.BacgroundTasks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace Singular.Roulette.Services.Abstractions
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IBetService, BetService>();
-
+            services.AddHostedService<FinishTransactionService>();
 
             return services;
         }

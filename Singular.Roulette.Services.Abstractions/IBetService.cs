@@ -10,5 +10,8 @@ namespace Singular.Roulette.Services.Abstractions
     public interface IBetService
     {
         Task<BetResult> MakeBet(BetDto betDto);
+        Task<BallaceDto> CalcJackpot();
+        
+
     }
 }
