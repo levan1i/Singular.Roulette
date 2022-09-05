@@ -42,8 +42,7 @@ namespace Singular.Roulette.Api.Controllers
         [ProducesResponseType(typeof(ResultBase), (int)HttpStatusCode.InternalServerError)]
         public Task<PagedResult<GameHistoryDto>> GameHistory(int page=1,int pageSize=10) => _userService.GetGameHistory(page,pageSize);
 
-        [HttpGet("Ballance1")]
-        
-        public int Ballance1() => 1;
+        [HttpGet("Test")]        
+        public int Test() => 1;
     }
 }
