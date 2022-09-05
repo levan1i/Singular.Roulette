@@ -21,6 +21,9 @@ namespace Singular.Roulette.Api.Identity
             var user =await _userService.Get(Convert.ToInt64(context.Subject.Claims.First(x=>x.Type=="sub").Value));
             var sessionId = Guid.NewGuid().ToString();
             await _userService.AddUserHeartBeet(sessionId, user.UserId);
+
+            //Add Session and Username claim in token
+         
             var claims = new List<Claim>
             {
               new Claim("username",user.UserName ),
@@ -30,6 +33,9 @@ namespace Singular.Roulette.Api.Identity
 
         }
 
+
+        //Temporary unused
+        //There is no user blocking mechanism proposed
         public async Task IsActiveAsync(IsActiveContext context)
         {
            context.IsActive = true;

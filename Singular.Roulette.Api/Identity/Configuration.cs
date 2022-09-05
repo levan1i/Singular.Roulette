@@ -50,7 +50,7 @@ namespace Singular.Roulette.Api.Identity
 
                     AllowOfflineAccess = true,
                     AllowedScopes = { "Singular.Roulette.Api" },
-                  
+
                 }
             };
     }

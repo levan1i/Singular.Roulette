@@ -1,0 +1,20 @@
+﻿.opblock-summary-description {
+    text-align: right;
+    font-weight: bolder;
+}
+
+.opblock-post .opblock-summary-description {
+    color: #1ca767 !important;
+}
+
+.opblock-get .opblock-summary-description {
+    color: #61affe !important;
+}
+
+.opblock-put .opblock-summary-description {
+    color: #fca130 !important;
+}
+
+.opblock-delete .opblock-summary-description {
+    color: #f93e3e !important;
+}

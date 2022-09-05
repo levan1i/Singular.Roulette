@@ -9,7 +9,7 @@ namespace Singular.Roulette.Domain.Interfaces
 {
     public interface ITransactionRepository :IGenericRepository<Transaction>
     {
-        Task<Bet> MakeBetTransaction(long AccountId,decimal Amount,Bet bet);
+        Task<Bet> MakeBetTransaction(long AccountId,string currency,decimal Amount,Bet bet);
         Task<bool> MakeBetWinTransaction(long AccountId, decimal Amount);
         Task<IEnumerable<Transaction>> GetBlockedTransactions();
         Task<bool> FinishBlockedFundsTransaction(long transactionId);

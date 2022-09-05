@@ -2,7 +2,7 @@
 
 namespace Singular.Roulette.Api.Identity
 {
-
+    //Update heart beet record on each user event
     public class HeartbeetMiddleware
     {
         private readonly RequestDelegate _next;

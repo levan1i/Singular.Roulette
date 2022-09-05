@@ -20,7 +20,11 @@ namespace Singular.Roulette.Api.Controllers
         {
             _userService = userService;
         }
-
+        /// <summary>
+        /// Endpoint For User Registration
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         [HttpPost("Register")]
         [AllowAnonymous]
         [ProducesResponseType(typeof(UserDto), (int)HttpStatusCode.OK)]
@@ -28,6 +32,11 @@ namespace Singular.Roulette.Api.Controllers
         [ProducesResponseType(typeof(ResultBase), (int)HttpStatusCode.InternalServerError)]
         public Task<UserDto> Post(UserDto user) => _userService.Create(user);
 
+
+        /// <summary>
+        /// Endpoint For User Available ballance calculation
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("Ballance")]
         [ProducesResponseType(typeof(BallaceDto), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ResultBase), (int)HttpStatusCode.BadRequest)]
@@ -35,13 +44,24 @@ namespace Singular.Roulette.Api.Controllers
         public Task<BallaceDto> Ballance() => _userService.GetBallance();
 
 
-
+        /// <summary>
+        /// Endpoint for user game history. 
+        /// </summary>
+        /// <remarks>
+        /// - Note: Endpoint has pagination
+        /// - Default returns 10 records
+        /// </remarks>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
         [HttpGet("GameHistory")]
         [ProducesResponseType(typeof(PagedResult<GameHistoryDto>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ResultBase), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(ResultBase), (int)HttpStatusCode.InternalServerError)]
         public Task<PagedResult<GameHistoryDto>> GameHistory(int page=1,int pageSize=10) => _userService.GetGameHistory(page,pageSize);
 
+
+        //To Do remove after development
         [HttpGet("Test")]        
         public int Test() => 1;
     }

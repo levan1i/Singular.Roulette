@@ -10,6 +10,7 @@ namespace Singular.Roulette.Api.Extentions
 
             services.AddSwaggerGen(c =>
             {
+                c.IncludeXmlComments("./Singular.Roulette.Api.xml");
                 c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
                 {
                     Type = SecuritySchemeType.OAuth2,

@@ -23,21 +23,7 @@ namespace Singular.Roulette.Repository
                 UserId = createduser.UserId
 
             });
-            var CreatedGameAccount=_context.Accounts.Add(new Account
-            {
-                Currency = "USD",
-                TypeId = 10,
-                UserId = createduser.UserId
-
-            });
-            var CreatedJackpot = _context.Accounts.Add(new Account
-            {
-                Currency = "USD",
-                TypeId = 11,
-                UserId = createduser.UserId
-
-
-            });
+          
           
 
             return createduser;
@@ -50,11 +36,11 @@ namespace Singular.Roulette.Repository
 
         public async Task<Account?> GetUserBallance(long UserId, string currency)
         {
-            var account =await _context.Accounts.AsNoTracking().FirstOrDefaultAsync(x => x.TypeId == 1 &&x.Currency==currency);
+            var account =await _context.Accounts.AsNoTracking().FirstOrDefaultAsync(x => x.TypeId == 1 &&x.Currency==currency&&x.UserId == UserId);
             if (account == null) return null;
             var plusblocks =  _context.Transactions.Where(x => x.ToAccountId == account.Id && x.TransactionStatusCode == 201).Sum(x => x.Amount);
             var minusblocks = _context.Transactions.Where(x => x.FromAccountId == account.Id && x.TransactionStatusCode == 201).Sum(x => x.Amount);
-           account.Ballance= account.Ballance + plusblocks - minusblocks;
+            account.Ballance= account.Ballance + plusblocks - minusblocks;
             return account;
         }
 

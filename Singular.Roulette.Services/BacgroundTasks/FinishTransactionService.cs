@@ -14,12 +14,16 @@ namespace Singular.Roulette.Services.BacgroundTasks
     {
       public  static bool isEnabled { get; set; } =true;
     }
+
+    /// <summary>
+    /// Service for finsih blocked transactions
+    /// </summary>
     internal class FinishTransactionService :BackgroundService
 {
-    private readonly TimeSpan _period = TimeSpan.FromSeconds(60);
+    private readonly TimeSpan _period = TimeSpan.FromSeconds(10);
     private readonly ILogger<FinishTransactionService> _logger;
     private readonly IServiceScopeFactory _factory;
-    private int _executionCount = 0;
+   
        
 
     public FinishTransactionService(
@@ -42,32 +46,38 @@ namespace Singular.Roulette.Services.BacgroundTasks
                 if (FinishJobStat.isEnabled)
                 {
                         FinishJobStat.isEnabled=false;
-                     await using AsyncServiceScope asyncScope = _factory.CreateAsyncScope();
-                    IUnitOfWork _unitOfWork = asyncScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+                        await using AsyncServiceScope asyncScope = _factory.CreateAsyncScope();
+                        IUnitOfWork _unitOfWork = asyncScope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+                        //Get all transactions with status 201(blocked funds)
                         var transaction =await _unitOfWork.Transactions.GetBlockedTransactions();
 
+
+                        var grouped = transaction.GroupBy(x => new { x.FromAccountId });
+
+
+                        //Finish transactions One By One
+                      
                         foreach(var item in transaction)
                         {
-                           await _unitOfWork.Transactions.FinishBlockedFundsTransaction(item.TransactionId);
+                           
+                            await _unitOfWork.Transactions.FinishBlockedFundsTransaction(item.TransactionId);
                         }
-                        Thread.Sleep(4000);
-                    _executionCount++;
-                    _logger.LogInformation(
-                        $"Executed PeriodicHostedService - Count: {_executionCount}");
+                      
+            
                         FinishJobStat.isEnabled = true;
                 }
                 else
                 {
                     _logger.LogInformation(
-                        "Skipped PeriodicHostedService");
+                        "Skipped FinishTransactionService");
                 }
                    
             }
             catch (Exception ex)
             {
                     FinishJobStat.isEnabled=true; 
-                _logger.LogInformation(
-                    $"Failed to execute PeriodicHostedService with exception message {ex.Message}. Good luck next round!");
+                _logger.LogError(
+                    $"Failed to execute FinishTransactionService with exception message {ex.Message}");
             }
         }
     }

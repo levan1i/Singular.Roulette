@@ -16,18 +16,28 @@ namespace Singular.Roulette.Common.Extentions
         /// <returns></returns>
         public static long GetUserId(this IHttpContextAccessor httpContextAccessor)
         {
+
+          
             return Convert.ToInt64(httpContextAccessor.HttpContext.User.Claims.First(x => x.Type == "sub").Value);
 
         }
 
-        //todo retrive ip from x-forwarder-for header
+
         /// <summary>
-        /// Get user ip from htto request
+        /// Get user ip from http request
         /// </summary>
+        /// <remarks>
+        /// In case of working with proxy or load balancer
+        /// <c></c>
+        /// Use forwarded headers option and register forwarded headers middleware
+        /// 
+        /// 
+        /// </remarks>
         /// <param name="httpContextAccessor"></param>
         /// <returns></returns>
         public static string GetUserIp(this IHttpContextAccessor httpContextAccessor)
         {
+
             return httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
 
         }

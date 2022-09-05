@@ -18,6 +18,8 @@ namespace Singular.Roulette.Api.Identity
         {
             IUserService _userService = context.RequestServices.GetService<IUserService>();
 
+
+            //In case of expired sessionId remove token from headers
             if (context.Request.Headers.ContainsKey("Authorization"))
             {
 

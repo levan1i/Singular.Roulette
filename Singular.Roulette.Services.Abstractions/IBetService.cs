@@ -9,7 +9,17 @@ namespace Singular.Roulette.Services.Abstractions
 {
     public interface IBetService
     {
+        /// <summary>
+        /// Make Bet
+        /// </summary>
+        /// <param name="Currency"></param>
+        /// <returns></returns>
         Task<BetResult> MakeBet(BetDto betDto);
+        /// <summary>
+        /// Calculate jackpot based on jackpot account and blocked funds
+        /// </summary>
+        /// <param name="Currency"></param>
+        /// <returns></returns>
         Task<BallaceDto> CalcJackpot();
         
 

@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Singular.Roulette.Api</name>
+    </assembly>
+    <members>
+        <member name="M:Singular.Roulette.Api.Controllers.BetController.Make(Singular.Roulette.Services.Abstractions.Dtos.BetDto)">
+            <summary>
+            Endpoint for Make Bet. In case of wrong bet string or Insufficient funds, returnes 400 bad request
+            </summary>
+            <remarks> 
+            - Bet Json string example
+            - "[{\\"T\\": \\"v\\", \\"I\\": 20, \\"C\\": 1, \\"K\\": 1}]"
+            
+            </remarks>
+            <param name="bet"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Singular.Roulette.Api.Controllers.BetController.CalcJackpot">
+            <summary>
+            Endpoint for  current jacpot amount
+            </summary>
+            <remarks>
+            Also It is Possible to use SignalR for continuously updated information
+            - Hub endpoint  /BetHub
+            - Hub requires authorization, use access_token to connect.
+            </remarks>
+            <returns></returns>
+        </member>
+        <member name="M:Singular.Roulette.Api.Controllers.User.Post(Singular.Roulette.Services.Abstractions.Dtos.UserDto)">
+            <summary>
+            Endpoint For User Registration
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Singular.Roulette.Api.Controllers.User.Ballance">
+            <summary>
+            Endpoint For User Available ballance calculation
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Singular.Roulette.Api.Controllers.User.GameHistory(System.Int32,System.Int32)">
+            <summary>
+            Endpoint for user game history. 
+            </summary>
+            <remarks>
+            - Note: Endpoint has pagination
+            - Default returns 10 records
+            </remarks>
+            <param name="page"></param>
+            <param name="pageSize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Singular.Roulette.Api.Identity.ResourceOwnerPasswordValidator.ValidateAsync(IdentityServer4.Validation.ResourceOwnerPasswordValidationContext)">
+            <inheritdoc/>
+        </member>
+    </members>
+</doc>

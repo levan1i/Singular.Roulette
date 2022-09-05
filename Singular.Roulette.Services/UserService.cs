@@ -28,6 +28,8 @@ namespace Singular.Roulette.Services
 
         public async Task<UserDto> Create(UserDto user)
         {
+
+            //Create user record on DB
           var res = await _unitOfWork.Users.Add(new Domain.Models.User()
             {
                 CreateDate = DateTime.Now,
@@ -36,7 +38,7 @@ namespace Singular.Roulette.Services
             });
              _unitOfWork.Complete();
 
-
+            //Create account records on DB
            await _unitOfWork.Users.CreateUserAccounts(res);
             _unitOfWork.Complete();
             user.UserId = res.UserId;
@@ -145,6 +147,7 @@ namespace Singular.Roulette.Services
              _unitOfWork.Complete();
 
         }
+
 
         public async Task<PagedResult<GameHistoryDto>> GetGameHistory(int page,int pagesize)
         {

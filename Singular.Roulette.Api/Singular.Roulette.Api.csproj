@@ -5,6 +5,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>2c320e89-4550-466d-b959-76cfe0b38904</UserSecretsId>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <DocumentationFile>./Singular.Roulette.Api.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

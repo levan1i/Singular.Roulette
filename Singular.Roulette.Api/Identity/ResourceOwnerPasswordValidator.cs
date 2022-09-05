@@ -11,10 +11,8 @@ namespace Singular.Roulette.Api.Identity
         private readonly IUserService _userService;
 
 
-        public ResourceOwnerPasswordValidator(IUserService userService)
-        {
-            _userService = userService;
-        }
+        public ResourceOwnerPasswordValidator(IUserService userService) => _userService = userService;
+        /// <inheritdoc/>
 
         public async Task ValidateAsync(ResourceOwnerPasswordValidationContext context)
         {

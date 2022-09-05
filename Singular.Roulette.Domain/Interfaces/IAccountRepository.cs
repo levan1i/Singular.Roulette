@@ -9,6 +9,11 @@ namespace Singular.Roulette.Domain.Interfaces
 {
     public interface IAccountRepository : IGenericRepository<Account>
     {
+        /// <summary>
+        /// Calculate jackpot based on jackpot account and blocked funds
+        /// </summary>
+        /// <param name="Currency"></param>
+        /// <returns></returns>
         Task<decimal> CalcJackpotAmount(string Currency);
     }
 }

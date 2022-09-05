@@ -22,8 +22,13 @@ namespace Singular.Roulette.Api.Controllers
 
 
         /// <summary>
-        /// Make Bet, In case of wrong bet string or Insufficient funds, returnes 400 bad request
+        /// Endpoint for Make Bet. In case of wrong bet string or Insufficient funds, returnes 400 bad request
         /// </summary>
+        /// <remarks> 
+        /// - Bet Json string example
+        /// - "[{\\"T\\": \\"v\\", \\"I\\": 20, \\"C\\": 1, \\"K\\": 1}]"
+        /// 
+        /// </remarks>
         /// <param name="bet"></param>
         /// <returns></returns>
         [HttpPost("Make")]
@@ -35,8 +40,13 @@ namespace Singular.Roulette.Api.Controllers
 
 
         /// <summary>
-        /// Calculate Jackpot
+        /// Endpoint for  current jacpot amount
         /// </summary>
+        /// <remarks>
+        /// Also It is Possible to use SignalR for continuously updated information
+        /// - Hub endpoint  /BetHub
+        /// - Hub requires authorization, use access_token to connect.
+        /// </remarks>
         /// <returns></returns>
         [HttpGet("CalcJackpot")]
         [ProducesResponseType(typeof(BallaceDto), (int)HttpStatusCode.OK)]
