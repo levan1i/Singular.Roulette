@@ -11,8 +11,8 @@ using Singular.Roulette.Repository;
 namespace Singular.Roulette.Repository.Migrations
 {
     [DbContext(typeof(SingularDbContext))]
-    [Migration("20220904205103_m9")]
-    partial class m9
+    [Migration("20220906095244_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,7 +27,7 @@ namespace Singular.Roulette.Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    b.Property<decimal>("Ballance")
+                    b.Property<decimal>("Balance")
                         .HasColumnType("decimal(65,30)");
 
                     b.Property<string>("Currency")
@@ -187,10 +187,10 @@ namespace Singular.Roulette.Repository.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("varchar(20)");
 
-                    b.Property<bool>("isFailled")
+                    b.Property<bool>("isFailed")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<bool>("isFinnished")
+                    b.Property<bool>("isFinished")
                         .HasColumnType("tinyint(1)");
 
                     b.HasKey("TransactionStatusCode");

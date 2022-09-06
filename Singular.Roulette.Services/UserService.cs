@@ -111,15 +111,15 @@ namespace Singular.Roulette.Services
             };
         }
 
-        public async Task<BallaceDto> GetBallance()
+        public async Task<BallaceDto> GetBalance()
         {
-            var accountballance =await _unitOfWork.Users.GetUserBallance(httpContextAccessor.GetUserId(),"USD");
-            if(accountballance == null)
+            var accountbalance =await _unitOfWork.Users.GetUserBalance(httpContextAccessor.GetUserId(),"USD");
+            if(accountbalance == null)
             {
                 throw new DataNotFoundException("User Account Not Found");
             }
 
-            return new BallaceDto(accountballance.Ballance);
+            return new BallaceDto(accountbalance.Balance);
         }
 
         public async Task AddUserHeartBeet(string sessionId, long userid)

@@ -12,7 +12,7 @@ namespace Singular.Roulette.Domain.Interfaces
         Task<User> FindByUserName(string username);
         Task<User> CreateUserAccounts(User user);
         Task<Account> GetUserAccount(long UserId, string Currency);
-        Task<Account?> GetUserBallance(long UserId, string currency);
+        Task<Account?> GetUserBalance(long UserId, string currency);
        
     }
 

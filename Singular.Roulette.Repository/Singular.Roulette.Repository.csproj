@@ -24,8 +24,4 @@
     <ProjectReference Include="..\Singular.Roulette.Domain\Singular.Roulette.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Migrations\" />
-  </ItemGroup>
-
 </Project>

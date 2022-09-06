@@ -8,16 +8,16 @@ namespace Singular.Roulette.Services.Abstractions.Dtos
 {
     public class BallaceDto
     {
-        public decimal Ballance { get; set; }
+        public decimal Balance { get; set; }
         public string Currency { get; set; }    
         public string Dimention { get; set; }
 
-        public BallaceDto(decimal ballance)
+        public BallaceDto(decimal balance)
         {
 
             Currency = "USD";
             Dimention = "¢";
-            Ballance = ballance;
+            Balance = balance;
 
 
         }

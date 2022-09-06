@@ -44,16 +44,16 @@ namespace Singular.Roulette.Services
             }
 
             var betamount = ibvr.getBetAmount();
-            var userAccountBallance =await _unitOfWork.Users.GetUserBallance(_httpContextAccessor.GetUserId(), "USD");
-            //Check ballance against bet amount
-            if (userAccountBallance.Ballance < betamount)
+            var userAccountBalance =await _unitOfWork.Users.GetUserBalance(_httpContextAccessor.GetUserId(), "USD");
+            //Check balance against bet amount
+            if (userAccountBalance.Balance < betamount)
             {
                 throw new InvalidParametersException("Insufficient funds", "insufficient_funds");
             }
             //Move funds from user main balance to user game and jackpot accounts
             //block that funds for future move on main accounts
             //and save bet record in 1 transaction
-            var bet =  await _unitOfWork.Transactions.MakeBetTransaction(userAccountBallance.Id,userAccountBallance.Currency, betamount, new Domain.Models.Bet()
+            var bet =  await _unitOfWork.Transactions.MakeBetTransaction(userAccountBalance.Id,userAccountBalance.Currency, betamount, new Domain.Models.Bet()
             {
                 BetAmount = ibvr.getBetAmount(),
                 UserIpAddress = _httpContextAccessor.GetUserIp(),
@@ -70,7 +70,7 @@ namespace Singular.Roulette.Services
             }
 
 
-            //  var random = 17; 
+            //var random = 17; 
             var random =  RandomGenerator.Next(0, 36);
             int estWin = CheckBets.EstimateWin(betDto.JsonBetString, random);
             //Save spin separately
@@ -92,7 +92,7 @@ namespace Singular.Roulette.Services
             if (estWin != 0)
             {
                 //In Case of user win add funds to user account
-                await _unitOfWork.Transactions.MakeBetWinTransaction(userAccountBallance.Id, estWin);
+                await _unitOfWork.Transactions.MakeBetWinTransaction(userAccountBalance.Id, estWin);
             }
 
             //Send Jackpot update to all connected users

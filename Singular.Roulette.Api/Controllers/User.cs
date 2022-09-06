@@ -34,14 +34,14 @@ namespace Singular.Roulette.Api.Controllers
 
 
         /// <summary>
-        /// Endpoint For User Available ballance calculation
+        /// Endpoint For User Available balance calculation
         /// </summary>
         /// <returns></returns>
-        [HttpGet("Ballance")]
+        [HttpGet("Balance")]
         [ProducesResponseType(typeof(BallaceDto), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ResultBase), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(ResultBase), (int)HttpStatusCode.InternalServerError)]
-        public Task<BallaceDto> Ballance() => _userService.GetBallance();
+        public Task<BallaceDto> Balance() => _userService.GetBalance();
 
 
         /// <summary>

@@ -34,9 +34,9 @@
             <param name="user"></param>
             <returns></returns>
         </member>
-        <member name="M:Singular.Roulette.Api.Controllers.User.Ballance">
+        <member name="M:Singular.Roulette.Api.Controllers.User.Balance">
             <summary>
-            Endpoint For User Available ballance calculation
+            Endpoint For User Available balance calculation
             </summary>
             <returns></returns>
         </member>

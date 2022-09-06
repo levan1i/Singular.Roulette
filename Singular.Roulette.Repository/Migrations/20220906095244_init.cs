@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Singular.Roulette.Repository.Migrations
 {
-    public partial class initial : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -28,6 +28,21 @@ namespace Singular.Roulette.Repository.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "HeartBeets",
+                columns: table => new
+                {
+                    SessionId = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    LastUpdate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    UserId = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HeartBeets", x => x.SessionId);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "Spins",
                 columns: table => new
                 {
@@ -39,6 +54,22 @@ namespace Singular.Roulette.Repository.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Spins", x => x.SpinId);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "TransactionStatuses",
+                columns: table => new
+                {
+                    TransactionStatusCode = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    isFinished = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    isFailed = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TransactionStatuses", x => x.TransactionStatusCode);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -75,39 +106,21 @@ namespace Singular.Roulette.Repository.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Accounts",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    TypeId = table.Column<int>(type: "int", nullable: false),
-                    Currency = table.Column<string>(type: "varchar(5)", maxLength: 5, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Accounts", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Accounts_AccountTypes_TypeId",
-                        column: x => x.TypeId,
-                        principalTable: "AccountTypes",
-                        principalColumn: "TypeId",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "Bets",
                 columns: table => new
                 {
                     BetId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    SpinId = table.Column<long>(type: "bigint", nullable: false),
+                    SpinId = table.Column<long>(type: "bigint", nullable: true),
                     WonAmount = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
                     BetAmount = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
                     BetStringJson = table.Column<string>(type: "varchar(2000)", maxLength: 2000, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    UserId = table.Column<long>(type: "bigint", nullable: false)
+                    isFinnished = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    UserId = table.Column<long>(type: "bigint", nullable: false),
+                    UserIpAddress = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CreateDate = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -116,8 +129,7 @@ namespace Singular.Roulette.Repository.Migrations
                         name: "FK_Bets_Spins_SpinId",
                         column: x => x.SpinId,
                         principalTable: "Spins",
-                        principalColumn: "SpinId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "SpinId");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -131,11 +143,19 @@ namespace Singular.Roulette.Repository.Migrations
                     FromAccountId = table.Column<long>(type: "bigint", nullable: false),
                     ToAccountId = table.Column<long>(type: "bigint", nullable: false),
                     TransactionDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    ParentTransactionId = table.Column<long>(type: "bigint", nullable: false)
+                    ParentTransactionId = table.Column<long>(type: "bigint", nullable: true),
+                    TransactionStatusCode = table.Column<int>(type: "int", nullable: false),
+                    Amount = table.Column<decimal>(type: "decimal(65,30)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Transactions", x => x.TransactionId);
+                    table.ForeignKey(
+                        name: "FK_Transactions_TransactionStatuses_TransactionStatusCode",
+                        column: x => x.TransactionStatusCode,
+                        principalTable: "TransactionStatuses",
+                        principalColumn: "TransactionStatusCode",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Transactions_TransactionTypes_TransactionTypeId",
                         column: x => x.TransactionTypeId,
@@ -146,21 +166,31 @@ namespace Singular.Roulette.Repository.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "UserAccounts",
+                name: "Accounts",
                 columns: table => new
                 {
-                    AccountId = table.Column<long>(type: "bigint", nullable: false),
-                    UserId = table.Column<long>(type: "bigint", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    TypeId = table.Column<int>(type: "int", nullable: false),
+                    Currency = table.Column<string>(type: "varchar(5)", maxLength: 5, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    UserId = table.Column<long>(type: "bigint", nullable: true),
+                    Balance = table.Column<decimal>(type: "decimal(65,30)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserAccounts", x => new { x.AccountId, x.UserId });
+                    table.PrimaryKey("PK_Accounts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserAccounts_Accounts_AccountId",
-                        column: x => x.AccountId,
-                        principalTable: "Accounts",
-                        principalColumn: "Id",
+                        name: "FK_Accounts_AccountTypes_TypeId",
+                        column: x => x.TypeId,
+                        principalTable: "AccountTypes",
+                        principalColumn: "TypeId",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Accounts_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -170,32 +200,47 @@ namespace Singular.Roulette.Repository.Migrations
                 column: "TypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Accounts_UserId",
+                table: "Accounts",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bets_CreateDate",
+                table: "Bets",
+                column: "CreateDate");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Bets_SpinId",
                 table: "Bets",
                 column: "SpinId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Transactions_TransactionStatusCode",
+                table: "Transactions",
+                column: "TransactionStatusCode");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Transactions_TransactionTypeId",
                 table: "Transactions",
                 column: "TransactionTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserAccounts_AccountId",
-                table: "UserAccounts",
-                column: "AccountId",
-                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Accounts");
+
+            migrationBuilder.DropTable(
                 name: "Bets");
+
+            migrationBuilder.DropTable(
+                name: "HeartBeets");
 
             migrationBuilder.DropTable(
                 name: "Transactions");
 
             migrationBuilder.DropTable(
-                name: "UserAccounts");
+                name: "AccountTypes");
 
             migrationBuilder.DropTable(
                 name: "Users");
@@ -204,13 +249,10 @@ namespace Singular.Roulette.Repository.Migrations
                 name: "Spins");
 
             migrationBuilder.DropTable(
+                name: "TransactionStatuses");
+
+            migrationBuilder.DropTable(
                 name: "TransactionTypes");
-
-            migrationBuilder.DropTable(
-                name: "Accounts");
-
-            migrationBuilder.DropTable(
-                name: "AccountTypes");
         }
     }
 }

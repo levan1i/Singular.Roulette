@@ -132,12 +132,12 @@ namespace Singular.Roulette.Repository
                    
 
                     
-                    accountFrom.Ballance -= transaction.Amount;
-                    accountTo.Ballance += transaction.Amount;
+                    accountFrom.Balance -= transaction.Amount;
+                    accountTo.Balance += transaction.Amount;
 
                     
                     transaction.TransactionStatusCode = 200;
-                    if(accountFrom.Ballance<0|| accountTo.Ballance < 0)
+                    if(accountFrom.Balance<0|| accountTo.Balance < 0)
                     {
 
                     }

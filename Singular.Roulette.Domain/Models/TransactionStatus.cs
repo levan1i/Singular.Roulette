@@ -10,7 +10,7 @@ namespace Singular.Roulette.Domain.Models
     {
         public int TransactionStatusCode { get; set; }    
         public string Description { get; set; }
-        public bool isFinnished { get; set; }
-        public bool isFailled { get; set; }
+        public bool isFinished { get; set; }
+        public bool isFailed { get; set; }
     }
 }

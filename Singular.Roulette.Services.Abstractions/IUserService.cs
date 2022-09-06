@@ -29,10 +29,10 @@ namespace Singular.Roulette.Services.Abstractions
         /// <returns></returns>
         Task<UserDto> Create(UserDto user);
         /// <summary>
-        /// Get user account with calculated ballance
+        /// Get user account with calculated balance
         /// </summary>
         /// <returns></returns>
-        Task<BallaceDto> GetBallance();
+        Task<BallaceDto> GetBalance();
         /// <summary>
         /// Add user heart beet
         /// </summary>

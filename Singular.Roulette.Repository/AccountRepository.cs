@@ -24,7 +24,7 @@ namespace Singular.Roulette.Repository
             var plusblocks = _context.Transactions.Where(x => x.ToAccountId == account.Id && x.TransactionStatusCode == 201).Sum(x => x.Amount);
             var minusblocks = _context.Transactions.Where(x => x.FromAccountId == account.Id && x.TransactionStatusCode == 201).Sum(x => x.Amount);
             
-            return account.Ballance + plusblocks - minusblocks;
+            return account.Balance + plusblocks - minusblocks;
         }
     }
 }
